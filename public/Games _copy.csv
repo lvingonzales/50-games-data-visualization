@@ -1,4 +1,4 @@
-Game,Genre,Sub-genre,Release Year,Studio,Hours, Price (current) ,Ratings (% positive)
+name,parent,Sub-genre,Release Year,Studio,value, Price (current) ,Ratings (% positive)
 Europa Universalis 4,Strategy,Simulation,2013,Paradox Development Studio,2980.3, $66.99 ,86%
 Crusader Kings 2,Strategy,Simulation,2012,Paradox Development Studio,1676.5, $-   ,88%
 Victoria 3,Strategy,Simulation,2022,Paradox Development Studio,999.6, $66.99 ,67%
@@ -33,7 +33,7 @@ Imperator Rome,Strategy,Simulation,2019,Paradox Development Studio,70.5, $52.99 
 Unturned,Survival,Sandbox,2017,Smartly Dressed Games,69.8, $-   ,90%
 Dragons Dogma Dark Arisen,Adventure,Action,2016,Capcom,65.6, $6.39 ,87%
 Endless Space 2,Strategy,Simulation,2017,Amplitude Studios,63.1, $43.99 ,91%
-Bloons TD 6,Tower Defence,null,2018,Ninja Kiwi,61, $15.49 ,96%
+Bloons TD 6,Tower-Defence,null,2018,Ninja Kiwi,61, $15.49 ,96%
 Endless Legend,Strategy,Simulation,2014,Amplitude Studios,52.2, $32.02 ,82%
 Dark Souls 3,Adventure,Action,2016,"FromSoftware, Inc.",46, $39.99 ,93%
 Stardew Valley,Casual,Simulation,2016,ConcernedApe,46, $16.99 ,97%
