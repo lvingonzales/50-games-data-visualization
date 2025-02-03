@@ -2,29 +2,36 @@ import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
 
-export default function Treemap() {
+export default function Treemap({setTreeData}) {
   const chartRef = useRef(null);
 
   const uid = (prefix = "id") => {
     return `${prefix}-${crypto.randomUUID()}`;
   };
 
-  const colorMapping = {
-    Action: "#9E0031", //Red
-    Adventure: "#386C0B", //Green
-    Strategy: "#183059", //Blue
-    Casual: "#F40076", // Pink
-    "Role-Playing": "#571F4E", //Deep Purple
-    "Colony Builder": "#2A2D34", // Dark Grey , Slate
-    Fighting: "#7B0828", //Claret
-    Sandbox: "#41292C", //Van Dyke
-    Survival: "#3A015C", //Violet
-    "Tower-Defense": "#362417", //Bistre
-  };
+  const resetChart = () => {
+    Array.from(document.querySelectorAll('rect')).forEach(rect => {
+      rect.classList.remove(style_treeMap.inactive);
+      rect.classList.remove(style_treeMap.active);
+      rect.classList.remove(style_treeMap.selected);
+    });
+  }
 
   useEffect(() => {
     const width = 1000;
     const height = 800;
+    const colorMapping = {
+      Action: "#9E0031", //Red
+      Adventure: "#386C0B", //Green
+      Strategy: "#183059", //Blue
+      Casual: "#F40076", // Pink
+      "Role-Playing": "#571F4E", //Deep Purple
+      "Colony Builder": "#2A2D34", // Dark Grey , Slate
+      Fighting: "#7B0828", //Claret
+      Sandbox: "#41292C", //Van Dyke
+      Survival: "#3A015C", //Violet
+      "Tower-Defense": "#362417", //Bistre
+    };
 
     const margin = {
       top: 10,
@@ -73,11 +80,41 @@ export default function Treemap() {
         .selectAll("g")
         .data(root.leaves())
         .join("a")
+        .attr("id", "treeLeaf")
+        .attr("class", (d) => d.parent.data.id)
         .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
-        .attr("href", "#")
+        .attr("href", d => `https://steamdb.info/app/${d.data.data.AppId}/`)
+        .attr("target", "_blank")
+        .on("click mouseover", (event) => {
+          let group = event.currentTarget.classList.value;
+          let selected = event.currentTarget.querySelector("rect");
+
+          let leaves = Array.from(document.querySelectorAll("#treeLeaf"));
+
+          leaves.forEach((leaf) => {
+            let leafRect = leaf.querySelector("rect");
+            if (
+              leaf !== selected &&
+              leafRect.classList.contains(style_treeMap.selected)
+            ) {
+              leafRect.classList.remove(style_treeMap.selected);
+            }
+            if (leaf.classList.contains(group)) {
+              leafRect.classList.remove(style_treeMap.inactive);
+              leafRect.classList.add(style_treeMap.active);
+              selected.classList.add(style_treeMap.selected);
+            } else {
+              leafRect.classList.add(style_treeMap.inactive);
+            }
+          });
+        })
+        .on("mouseenter", function(d, i) {
+          console.log(i.data.data);
+        })
 
       leaf
         .append("rect")
+        .attr("class", style_treeMap.rects)
         .attr("id", (d) => (d.leafUid = uid("leaf")))
         .attr("width", (d) => d.x1 - d.x0)
         .attr("height", (d) => d.y1 - d.y0)
@@ -103,7 +140,9 @@ export default function Treemap() {
         .attr("font-size", "16px")
         .selectAll("tspan")
         .data((d) =>
-          d.data.id.split(/(?=[A-Z][a-z])|\s+/g).concat(d3.format(".1f")(d.value))
+          d.data.id
+            .split(/(?=[A-Z][a-z])|\s+/g)
+            .concat(d3.format(".1f")(d.value))
         )
         .join("tspan") // Create/update/remove <tspan> elements based on data
         .attr("x", 3) // Set horizontal position
@@ -152,7 +191,13 @@ export default function Treemap() {
         .attr("y", 14)
         .text((d) => d[0]);
     });
-  });
+  }, []);
 
-  return <div ref={chartRef}></div>;
+  return (
+    <div>
+      <div ref={chartRef}>
+      </div>
+      <button onClick={resetChart}>Reset</button>
+    </div>
+  );
 }

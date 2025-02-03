@@ -1,3 +1,27 @@
 .legendText {
     font-size: 1rem;
 }
+
+.rects {
+    transition: 0.5s all ease-in-out;
+}
+
+a:hover > .rects {
+    fill: darkgreen;
+    fill-opacity: 1 !important;
+}
+
+.active.selected {
+    fill: darkgreen;
+    fill-opacity: 1 !important;
+}
+
+.active {
+    fill: green;
+    fill-opacity: 0.6;
+}
+
+.inactive {
+    fill: black;
+    fill-opacity: 60%;
+}
