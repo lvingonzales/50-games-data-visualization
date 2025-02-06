@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
 
-export default function Treemap({setTreeData}) {
+export default function Treemap({setTreeData, colours}) {
   const chartRef = useRef(null);
 
   const uid = (prefix = "id") => {
@@ -20,18 +20,7 @@ export default function Treemap({setTreeData}) {
   useEffect(() => {
     const width = 1600;
     const height = 800;
-    const colorMapping = {
-      Action: "#9E0031", //Red
-      Adventure: "#386C0B", //Green
-      Strategy: "#183059", //Blue
-      Casual: "#F40076", // Pink
-      "Role-Playing": "#571F4E", //Deep Purple
-      "Colony Builder": "#2A2D34", // Dark Grey , Slate
-      Fighting: "#7B0828", //Claret
-      Sandbox: "#41292C", //Van Dyke
-      Survival: "#3A015C", //Violet
-      "Tower-Defense": "#362417", //Bistre
-    };
+    
 
     const margin = {
       top: 10,
@@ -41,7 +30,7 @@ export default function Treemap({setTreeData}) {
     };
 
     d3.csv("/Games.csv").then((games) => {
-      console.log("Raw Data:", games);
+      //console.log("Raw Data:", games);
 
       games.forEach((game) => {
         game.Hours = +game.Hours;
@@ -64,7 +53,7 @@ export default function Treemap({setTreeData}) {
           .sort((a, b) => b.value - a.value)
       );
 
-      console.log("Hierarchy:", root);
+      //console.log("Hierarchy:", root);
 
       const svg = d3
         .select(chartRef.current)
@@ -120,11 +109,11 @@ export default function Treemap({setTreeData}) {
         .attr("height", (d) => d.y1 - d.y0)
         .attr("fill", (d) => {
           let parent = d.parent;
-          while (parent && !colorMapping[parent.data.id]) {
+          while (parent && !colours[parent.data.id]) {
             parent = parent.parent;
           }
 
-          return colorMapping[parent ? parent.data.id : "default"];
+          return colours[parent ? parent.data.id : "default"];
         });
 
       leaf
@@ -172,7 +161,7 @@ export default function Treemap({setTreeData}) {
 
       const legend = legendWrapper
         .selectAll(".legend")
-        .data(Object.entries(colorMapping))
+        .data(Object.entries(colours))
         .enter()
         .append("g")
         .attr("class", style_treeMap.legend)
