@@ -102,8 +102,9 @@ export default function BeeSwarm({colours}) {
         )
         .attr("r", radius)
         .attr("fill", (datum) => {
-          let genre = datum.genre;
-          return colours[genre ? datum.data.Genre : "default"];
+          let genre = datum.data.Genre;
+
+          return colours[genre ? genre : "default"]
         })
         .append("title")
         .text((datum) => datum.data.Game);

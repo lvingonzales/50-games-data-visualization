@@ -1,0 +1,72 @@
+body {
+    margin: 0px;
+}
+
+.heroWrapper {
+    width: 100%;
+    height: 100vh;
+    background-color: #2a2a2a;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    justify-content: center;
+    position: relative;
+}
+
+.heroWrapper > * {
+    color: white;
+    margin: 0px;
+    margin-left: 32px;
+    width: 60%;
+    transform: translateY(-20%);
+    opacity: 0%;
+    transition: 0.5s all ease-in-out;
+}
+
+.heroWrapper > h1 {
+    font-size: clamp(128px, 10vh, 200px);
+    color: #3C6AFF;
+}
+
+.heroWrapper > h2 {
+    font-size: clamp(36px, 3vh, 50px);
+}
+
+.heroWrapper > p {
+    font-size: clamp(32px, 2vh, 48px);
+}
+
+.heroWrapper.isVisible > * {
+    transform: translateY(0%);
+    opacity: 100%;
+    transition: 0.5s all ease-in-out;
+}
+
+.heroWrapper > img {
+    position: absolute;
+    right: 5%;
+    top: 90%;
+    margin: 0px auto 0px auto;
+    width: 30px;
+    animation: bounce 0.5s linear infinite alternate;
+    filter: drop-shadow(0 0 1rem white);
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(10%);
+    }
+}
+
+.mainContainer {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 3fr 1.5fr;
+    grid-template-rows: 1.5fr 4fr;
+}
+
+
