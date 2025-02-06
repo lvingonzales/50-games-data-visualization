@@ -18,7 +18,7 @@ export default function Treemap({setTreeData}) {
   }
 
   useEffect(() => {
-    const width = 1000;
+    const width = 1600;
     const height = 800;
     const colorMapping = {
       Action: "#9E0031", //Red
@@ -72,7 +72,10 @@ export default function Treemap({setTreeData}) {
         .attr("viewBox", [0, 0, width + margin.right + margin.left, height])
         .attr("width", width)
         .attr("height", height)
-        .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
+        .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;")
+        .on("mouseleave", () => {
+          resetChart();
+        })
 
       const leafContainer = svg.append("g");
 
@@ -85,7 +88,7 @@ export default function Treemap({setTreeData}) {
         .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
         .attr("href", d => `https://steamdb.info/app/${d.data.data.AppId}/`)
         .attr("target", "_blank")
-        .on("click mouseover", (event) => {
+        .on("mouseover", (event) => {
           let group = event.currentTarget.classList.value;
           let selected = event.currentTarget.querySelector("rect");
 
@@ -107,9 +110,6 @@ export default function Treemap({setTreeData}) {
               leafRect.classList.add(style_treeMap.inactive);
             }
           });
-        })
-        .on("mouseenter", function(d, i) {
-          console.log(i.data.data);
         })
 
       leaf
@@ -197,7 +197,6 @@ export default function Treemap({setTreeData}) {
     <div>
       <div ref={chartRef}>
       </div>
-      <button onClick={resetChart}>Reset</button>
     </div>
   );
 }
