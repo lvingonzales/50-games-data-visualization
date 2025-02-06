@@ -16,23 +16,26 @@ const colorMapping = {
   "Tower-Defense": "#362417", //Bistre
 };
 
+const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: .6,
+  }
+
 export default function App() {
   const [treeData, setTreeData] = useState("");
 
-  const [objectRef, isVisible] = useElementOnScreen({
-    root: document.querySelector("#scrollArea"),
-    rootMargin: "0px",
-    threshold: .6,
-  });
+  const [heroSection, heroVisible] = useElementOnScreen(options);
+  const [mainSection, mainVisible] = useElementOnScreen({...options, threshold: 0.7});
   return (
     <>
-      <div ref={objectRef} className={isVisible?"heroWrapper isVisible": "heroWrapper"}>
+      <div ref={heroSection} className={heroVisible?"heroWrapper isVisible": "heroWrapper"}>
         <h1>Data Visualization Project: 2</h1>
         <h2>An examination of my own top 50 most played video games</h2>
         <p>By: Liam Gonzales</p>
         <img src="/Arrow.svg" alt="Arrow pointing downwards" />
       </div>
-      <div ref={objectRef} className={isVisible?"mainContainer isVisible": "mainContainer"}>
+      <div ref={mainSection} className={mainVisible?"mainContainer isVisible": "mainContainer"}>
         <div className="header"></div>
         <div className="chartSpace"></div>
         <div className="infoPanel"></div>

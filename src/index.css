@@ -67,6 +67,13 @@ body {
     display: grid;
     grid-template-columns: 3fr 1.5fr;
     grid-template-rows: 1.5fr 4fr;
+
+    background-color: #2a2a2a;
+    transition: 0.5s all ease-in-out;
+}
+
+.mainContainer.isVisible {
+    background-color: white;
 }
 
 
