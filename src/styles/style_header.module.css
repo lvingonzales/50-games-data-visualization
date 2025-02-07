@@ -41,3 +41,8 @@
 .controlPanel {
     margin-top: 0px;
 }
+
+.controls {
+    display: flex;
+    gap: 16px;
+}

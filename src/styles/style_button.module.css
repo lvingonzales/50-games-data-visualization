@@ -19,3 +19,7 @@
     background-color: #213987;
     color: rgb(157, 157, 157);
 }
+
+.btn.inactive {
+    pointer-events: none;
+}

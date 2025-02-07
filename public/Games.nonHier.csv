@@ -1,51 +1,51 @@
 Game,Genre,Sub-genre,Release Year,Studio,Hours, Price (current),Ratings (% positive),AppId
-Apex Legends,Action,None,2020,Respawn Entertainment,533.4,0,0.67,1172470
-Monster Hunter World,Action,Adventure,2018,Capcom,238.7,13.19,0.87,582010
-Counter Strike,Action,None,2012,Valve,189.7,0,0.86,730
-Risk of Rain 2,Action,Rougelike,2020,Hopoo Games,143.6,28.99,0.92,632360
-theHunter: Call of the Wild,Action,Simulation,2017,Expansive Worlds,125,25.99,0.87,518790
-PAYDAY 2,Action,None,2013,Overkill Software,100.7,3.24,0.88,218620
-Rainbow Six Siege,Action,None,2015,Ubisoft Montreal,94.7,24.99,0.83,359550
-Warhammer Vermintide 2,Action,Adventure,2018,Fatshark,92.8,38.99,0.83,552500
-Hades,Action,Adventure,2020,Supergiant Games,32.2,13,0.97,1145360
-Skyrim,Adventure,Action,2016,Bethesda Softworks,196.4,53.49,0.9,72850
-The Witcher 3: Wild hunt,Adventure,Action,2015,CD Projekt Red,122.2,11.19,0.95,292030
-Cyberpunk 2077,Adventure,Action,2020,CD Projekt Red,89.5,35.99,0.83,091500
-Yakuza 0,Adventure,Action,2018,Ryu Ga Gotoku Studio,75.4,16.49,0.94,638970
-Dragons Dogma Dark Arisen,Adventure,Action,2016,Capcom,65.6,6.39,0.87,367500
-Dark Souls 3,Adventure,Action,2016,"FromSoftware, Inc.",46,39.99,0.93,374320
-Armored Core 6,Adventure,Action,2023,"FromSoftware, Inc.",44.9,79.99,0.89,1888160
-Metal Gear Solid 5,Adventure,Action,2015,Konami,35.1,17.99,0.9,287700
-Octopath Traveller,Adventure,Action,2019,Square Enix,28.5,33.59,0.84,921570
-Stardew Valley,Casual,Simulation,2016,ConcernedApe,46,16.99,0.97,413150
-Adventure Capitalist,Casual,None,2015,Hyper Hippo Games,39.9,0,0.86,346900
-Realm Grinder,Casual,None,2017,Divine Games,35.8,0,0.84,610080
-Rimworld,Colony Builder,Survival,2018,Ludeon Studios,197.3,31.99,0.96,294100
-Dragon Ball Fighterz,Fighting,None,2018,Arc System Works,37.1,52.73,0.89,678950
-Brawlhalla,Fighting,None,2017,Blue Mammoth Games,24.2,0,0.82,291550
-Mount and Blade Warband,Role-Playing,Action,2010,TaleWorlds Entertainment,41.7,25.99,0.96,48700
-Satisfactory,Sandbox,Survival,2024,Coffee Stain Studios,440.9,51.99,0.95,526870
-Cities Skylines,Sandbox,Simulation,2015,Colossal Order,295,39.99,0.92,255710
-Software Inc.,Sandbox,Simulation,2015,Coredumping,196,29.9,0.91,362620
-Transport Fever 2,Sandbox,Simulation,2019,Urban Games,142,51.99,0.88,1066780
-Prison Architect,Sandbox,Simulation,2015,Introversion Software,80,39.99,0.87,233450
-No Mans Sky,Sandbox,Simulation,2016,Hello Games,38.1,31.19,0.81,275850
-Open TTD,Sandbox,Simulation,2004,OpenTTD,24.3,0,0.93,1536610
-Europa Universalis 4,Strategy,Simulation,2013,Paradox Development Studio,2980.3,66.99,0.86,236850
-Crusader Kings 2,Strategy,Simulation,2012,Paradox Development Studio,1676.5,0,0.88,203770
-Victoria 3,Strategy,Simulation,2022,Paradox Development Studio,999.6,66.99,0.67,529340
-Hearts of Iron 4,Strategy,Simulation,2016,Paradox Development Studio,990,66.99,0.9,394360
-Stellaris,Strategy,Simulation,2016,Paradox Development Studio,611.5,52.99,0.86,281990
-Crusader Kings 3,Strategy,Simulation,2020,Paradox Development Studio,336,66.99,0.9,1158310
-Total War Three Kingdoms,Strategy,Simulation,2019,Creative Assembly,244.3,14.99,0.71,779340
-Victoria 2,Strategy,Simulation,2010,Paradox Development Studio,230.3,26.99,0.9,42960
-Civilization 5,Strategy,Simulation,2010,Firaxis Games,183.9,32.99,0.94,8930
-Total War: Warhammer 2,Strategy,Simulation,2017,Creative Assembly,74,71.99,0.91,594570
-Total War: Shogun 2,Strategy,Simulation,2011,Creative Assembly,72.2,7.49,0.91,201270
-Imperator Rome,Strategy,Simulation,2019,Paradox Development Studio,70.5,52.99,0.63,859580
-Endless Space 2,Strategy,Simulation,2017,Amplitude Studios,63.1,43.99,0.91,392110
-Endless Legend,Strategy,Simulation,2014,Amplitude Studios,52.2,32.02,0.82,289130
-Total War: Rome 2,Strategy,Simulation,2013,Creative Assembly,41.5,71.99,0.82,214950
-Terraria+tModLoader,Survival,Sandbox,2011,Re-Logic,727.7,12.99,0.96,105600
-Unturned,Survival,Sandbox,2017,Smartly Dressed Games,69.8,0,0.9,304930
-Bloons TD 6,Tower-Defense,None,2018,Ninja Kiwi,61,15.49,0.96,960090
+Apex Legends,Action,None,2020,Respawn Entertainment,533.4,0,67,1172470
+Monster Hunter World,Action,Adventure,2018,Capcom,238.7,13.19,87,582010
+Counter Strike,Action,None,2012,Valve,189.7,0,86,730
+Risk of Rain 2,Action,Rougelike,2020,Hopoo Games,143.6,28.99,92,632360
+theHunter: Call of the Wild,Action,Simulation,2017,Expansive Worlds,125,25.99,87,518790
+PAYDAY 2,Action,None,2013,Overkill Software,100.7,3.24,88,218620
+Rainbow Six Siege,Action,None,2015,Ubisoft Montreal,94.7,24.99,83,359550
+Warhammer Vermintide 2,Action,Adventure,2018,Fatshark,92.8,38.99,83,552500
+Hades,Action,Adventure,2020,Supergiant Games,32.2,13,97,1145360
+Skyrim,Adventure,Action,2016,Bethesda Softworks,196.4,53.49,90,72850
+The Witcher 3: Wild hunt,Adventure,Action,2015,CD Projekt Red,122.2,11.19,95,292030
+Cyberpunk 2077,Adventure,Action,2020,CD Projekt Red,89.5,35.99,83,091500
+Yakuza 0,Adventure,Action,2018,Ryu Ga Gotoku Studio,75.4,16.49,94,638970
+Dragons Dogma Dark Arisen,Adventure,Action,2016,Capcom,65.6,6.39,87,367500
+Dark Souls 3,Adventure,Action,2016,"FromSoftware, Inc.",46,39.99,93,374320
+Armored Core 6,Adventure,Action,2023,"FromSoftware, Inc.",44.9,79.99,89,1888160
+Metal Gear Solid 5,Adventure,Action,2015,Konami,35.1,17.99,90,287700
+Octopath Traveller,Adventure,Action,2019,Square Enix,28.5,33.59,84,921570
+Stardew Valley,Casual,Simulation,2016,ConcernedApe,46,16.99,97,413150
+Adventure Capitalist,Casual,None,2015,Hyper Hippo Games,39.9,0,86,346900
+Realm Grinder,Casual,None,2017,Divine Games,35.8,0,84,610080
+Rimworld,Colony Builder,Survival,2018,Ludeon Studios,197.3,31.99,96,294100
+Dragon Ball Fighterz,Fighting,None,2018,Arc System Works,37.1,52.73,89,678950
+Brawlhalla,Fighting,None,2017,Blue Mammoth Games,24.2,0,82,291550
+Mount and Blade Warband,Role-Playing,Action,2010,TaleWorlds Entertainment,41.7,25.99,96,48700
+Satisfactory,Sandbox,Survival,2024,Coffee Stain Studios,440.9,51.99,95,526870
+Cities Skylines,Sandbox,Simulation,2015,Colossal Order,295,39.99,92,255710
+Software Inc.,Sandbox,Simulation,2015,Coredumping,196,29.9,91,362620
+Transport Fever 2,Sandbox,Simulation,2019,Urban Games,142,51.99,88,1066780
+Prison Architect,Sandbox,Simulation,2015,Introversion Software,80,39.99,87,233450
+No Mans Sky,Sandbox,Simulation,2016,Hello Games,38.1,31.19,81,275850
+Open TTD,Sandbox,Simulation,2004,OpenTTD,24.3,0,93,1536610
+Europa Universalis 4,Strategy,Simulation,2013,Paradox Development Studio,2980.3,66.99,86,236850
+Crusader Kings 2,Strategy,Simulation,2012,Paradox Development Studio,1676.5,0,88,203770
+Victoria 3,Strategy,Simulation,2022,Paradox Development Studio,999.6,66.99,67,529340
+Hearts of Iron 4,Strategy,Simulation,2016,Paradox Development Studio,990,66.99,90,394360
+Stellaris,Strategy,Simulation,2016,Paradox Development Studio,611.5,52.99,86,281990
+Crusader Kings 3,Strategy,Simulation,2020,Paradox Development Studio,336,66.99,90,1158310
+Total War Three Kingdoms,Strategy,Simulation,2019,Creative Assembly,244.3,14.99,71,779340
+Victoria 2,Strategy,Simulation,2010,Paradox Development Studio,230.3,26.99,90,42960
+Civilization 5,Strategy,Simulation,2010,Firaxis Games,183.9,32.99,94,8930
+Total War: Warhammer 2,Strategy,Simulation,2017,Creative Assembly,74,71.99,91,594570
+Total War: Shogun 2,Strategy,Simulation,2011,Creative Assembly,72.2,7.49,91,201270
+Imperator Rome,Strategy,Simulation,2019,Paradox Development Studio,70.5,52.99,63,859580
+Endless Space 2,Strategy,Simulation,2017,Amplitude Studios,63.1,43.99,91,392110
+Endless Legend,Strategy,Simulation,2014,Amplitude Studios,52.2,32.02,82,289130
+Total War: Rome 2,Strategy,Simulation,2013,Creative Assembly,41.5,71.99,82,214950
+Terraria+tModLoader,Survival,Sandbox,2011,Re-Logic,727.7,12.99,96,105600
+Unturned,Survival,Sandbox,2017,Smartly Dressed Games,69.8,0,90,304930
+Bloons TD 6,Tower-Defense,None,2018,Ninja Kiwi,61,15.49,96,960090

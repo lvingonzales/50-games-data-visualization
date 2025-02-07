@@ -1,8 +1,17 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
+import style_treeMap from "../styles/style_treemap.module.css";
 
-export default function BeeSwarm({colours}) {
+export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
   const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (activeChart === "bee") {
+      chartRef.current.classList.add(style_treeMap.activeChart);
+    } else {
+      chartRef.current.classList.remove(style_treeMap.activeChart);
+    }
+  }, [activeChart]);
 
   const dodge = (data, { radius, x }) => {
     const radius2 = radius ** 2;
@@ -33,7 +42,7 @@ export default function BeeSwarm({colours}) {
         b.y = Infinity;
         do {
           let y = a.y + Math.sqrt(radius2 - (a.x - b.x) ** 2);
-          if (y < b.y && !intersects(b.x, y)) b.y = y;  
+          if (y < b.y && !intersects(b.x, y)) b.y = y;
           a = a.next;
         } while (a);
       }
@@ -47,7 +56,7 @@ export default function BeeSwarm({colours}) {
 
   useEffect(() => {
     const chartDimensions = {
-      width: 800,
+      width: 1000,
       height: 200,
     };
 
@@ -64,7 +73,10 @@ export default function BeeSwarm({colours}) {
       console.log("Raw Data: ", data);
       const x = d3
         .scaleLinear()
-        .domain(d3.extent(data, (datum) => datum["Release Year"]))
+        .domain(d3.extent(data, (datum) => {
+          console.log(datum[toString(activeCriteria)]);
+          return datum[activeCriteria]
+        }))
         .range([margins.left, chartDimensions.width - margins.right]);
 
       const svg = d3
@@ -73,7 +85,10 @@ export default function BeeSwarm({colours}) {
         .attr("width", chartDimensions.width)
         .attr("height", chartDimensions.height)
         .attr("viewBox", [0, 0, chartDimensions.width, chartDimensions.height])
-        .attr("style", "max-width: 100%; height: auto; border: 1px solid black;");
+        .attr(
+          "style",
+          "max-width: 100%; height: auto; border: 1px solid black;"
+        );
 
       svg
         .append("g")
@@ -91,7 +106,7 @@ export default function BeeSwarm({colours}) {
         .data(
           dodge(data, {
             radius: radius * 2 + padding,
-            x: (datum) => x(datum["Release Year"]),
+            x: (datum) => x(datum[activeCriteria]),
           })
         )
         .join("circle")
@@ -104,12 +119,12 @@ export default function BeeSwarm({colours}) {
         .attr("fill", (datum) => {
           let genre = datum.data.Genre;
 
-          return colours[genre ? genre : "default"]
+          return colours[genre ? genre : "default"];
         })
         .append("title")
         .text((datum) => datum.data.Game);
     });
-  }, []);
+  }, [activeCriteria]);
 
-  return <div ref={chartRef}></div>;
+  return <div className={style_treeMap.swarmWrapper} ref={chartRef}></div>;
 }

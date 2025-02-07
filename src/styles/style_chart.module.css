@@ -1,0 +1,8 @@
+.chartWrapper {
+    grid-area: 2 / 1 / 3/ 2;
+    display: flex;
+    place-content: space-around;
+    place-items: center;
+    flex-direction: column;
+    position: relative;
+}

@@ -2,12 +2,20 @@ import * as d3 from "d3";
 import { useEffect, useRef} from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
 
-export default function Treemap({setTreeData, colours}) {
+export default function Treemap({colours, activeChart}) {
   const chartRef = useRef(null);
 
   const uid = (prefix = "id") => {
     return `${prefix}-${crypto.randomUUID()}`;
   };
+
+  useEffect (() => {
+    if (activeChart === "tree") {
+      chartRef.current.classList.add(style_treeMap.activeChart);
+    } else {
+      chartRef.current.classList.remove(style_treeMap.activeChart);
+    }
+  }, [activeChart])
 
   const resetChart = () => {
     Array.from(document.querySelectorAll('rect')).forEach(rect => {
@@ -18,8 +26,8 @@ export default function Treemap({setTreeData, colours}) {
   }
 
   useEffect(() => {
-    const width = 1600;
-    const height = 800;
+    const width = 1000;
+    const height = 600;
     
 
     const margin = {
@@ -58,7 +66,7 @@ export default function Treemap({setTreeData, colours}) {
       const svg = d3
         .select(chartRef.current)
         .append("svg")
-        .attr("viewBox", [0, 0, width + margin.right + margin.left, height])
+        .attr("viewBox", [0, 0, width, height])
         .attr("width", width)
         .attr("height", height)
         .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;")
@@ -152,40 +160,10 @@ export default function Treemap({setTreeData, colours}) {
           ) => (i === nodes.length - 1 ? 0.7 : null)
         )
         .text((d) => d); // Set text content
-
-      const legendWrapper = svg
-        .append("g")
-        .attr("transform-origin", "50 50")
-        .attr("transform", `translate(${width}, ${margin.top})`)
-        .attr("class", style_treeMap.legendWrapper);
-
-      const legend = legendWrapper
-        .selectAll(".legend")
-        .data(Object.entries(colours))
-        .enter()
-        .append("g")
-        .attr("class", style_treeMap.legend)
-        .attr("transform", (d, i) => `translate(0, ${i * 50})`);
-
-      legend
-        .append("rect")
-        .attr("width", 18)
-        .attr("height", 18)
-        .attr("fill", (d) => d[1]);
-
-      legend
-        .append("text")
-        .attr("class", style_treeMap.legendText)
-        .attr("x", 20)
-        .attr("y", 14)
-        .text((d) => d[0]);
     });
   }, []);
 
   return (
-    <div>
-      <div ref={chartRef}>
-      </div>
-    </div>
+      <div className={style_treeMap.svgWrapper} ref={chartRef}></div>
   );
 }
