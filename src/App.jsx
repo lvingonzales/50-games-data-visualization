@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Treemap from "./components/treemap";
 import BeeSwarm from "./components/beeswarm";
 import { useElementOnScreen } from "./components/Hooks";
+import Button from "./components/Button";
 
 const colorMapping = {
   Action: "#9E0031", //Red
@@ -36,7 +37,9 @@ export default function App() {
         <img src="/Arrow.svg" alt="Arrow pointing downwards" />
       </div>
       <div ref={mainSection} className={mainVisible?"mainContainer isVisible": "mainContainer"}>
-        <div className="header"></div>
+        <div className="header">
+          <Button callback={() => console.log("pressed")} text={"Click Me!"} />
+        </div>
         <div className="chartSpace"></div>
         <div className="infoPanel"></div>
       </div>

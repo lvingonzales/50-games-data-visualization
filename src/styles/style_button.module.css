@@ -1,0 +1,18 @@
+.btn {
+    background-color: #3C6AFF;
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    color: white;
+    filter: drop-shadow(0px 5px 0px black);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.btn:active {
+    filter: none;
+    transform: translateY(5px);
+    background-color: #213987;
+    color: rgb(157, 157, 157);
+}

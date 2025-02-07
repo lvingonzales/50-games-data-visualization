@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
 
 export default function Treemap({setTreeData, colours}) {
