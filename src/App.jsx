@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import Treemap from "./components/treemap";
 import BeeSwarm from "./components/beeswarm";
 import { useElementOnScreen } from "./components/Hooks";
-import Button from "./components/Button";
+import Header from "./components/Header";
+
 
 const colorMapping = {
   Action: "#9E0031", //Red
@@ -20,14 +21,14 @@ const colorMapping = {
 const options = {
     root: null,
     rootMargin: "0px",
-    threshold: .6,
+    threshold: 1.0,
   }
 
 export default function App() {
   const [treeData, setTreeData] = useState("");
 
-  const [heroSection, heroVisible] = useElementOnScreen(options);
-  const [mainSection, mainVisible] = useElementOnScreen({...options, threshold: 0.7});
+  const [heroSection, heroVisible] = useElementOnScreen({...options, threshold: 0.2});
+  const [mainSection, mainVisible] = useElementOnScreen({...options, threshold: 0.5});
   return (
     <>
       <div ref={heroSection} className={heroVisible?"heroWrapper isVisible": "heroWrapper"}>
@@ -37,9 +38,7 @@ export default function App() {
         <img src="/Arrow.svg" alt="Arrow pointing downwards" />
       </div>
       <div ref={mainSection} className={mainVisible?"mainContainer isVisible": "mainContainer"}>
-        <div className="header">
-          <Button callback={() => console.log("pressed")} text={"Click Me!"} />
-        </div>
+        <Header />
         <div className="chartSpace"></div>
         <div className="infoPanel"></div>
       </div>

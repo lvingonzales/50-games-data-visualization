@@ -60,14 +60,14 @@ body {
     }
 
     to {
-        transform: translateY(10%);
+        transform: translateY(20%);
     }
 }
 
 .mainContainer {
     height: 100vh;
     display: grid;
-    grid-template-columns: 3fr 1.5fr;
+    grid-template-columns: 3fr 1.75fr;
     grid-template-rows: 1.5fr 4fr;
     background-color: #2a2a2a;
     transition: 0.5s all ease-in-out;
@@ -75,21 +75,6 @@ body {
 
 .mainContainer.isVisible {
     background-color: white;
-}
-
-.header {
-    border-bottom: 1px solid lightgray;
-    box-shadow: 0 0 1rem darkgray;
-    grid-area: 1 / 1 / 2 / 3;
-    transform: translateY(-100%);
-    opacity: 0%;
-    transition: transform .75s ease-in-out, opacity 0.7s ease-in-out 0.25s;
-
-}
-
-.mainContainer.isVisible > .header {
-    transform: translateY(0%);
-    opacity: 100%;
 }
 
 .infoPanel {
