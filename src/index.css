@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 body {
     margin: 0px;
     overflow-x: hidden;
@@ -32,10 +34,12 @@ body {
 
 .heroWrapper > h2 {
     font-size: clamp(36px, 3vh, 50px);
+    font-family: Inter;
 }
 
 .heroWrapper > p {
     font-size: clamp(32px, 2vh, 48px);
+    font-family: Inter;
 }
 
 .heroWrapper.isVisible > * {
@@ -88,4 +92,54 @@ body {
 .mainContainer.isVisible > .infoPanel {
     transform: translateX(0%);
     opacity: 100%;
+}
+
+.infoPanel {
+    padding: 2rem 2rem 0px 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoPanel > div {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid darkgray;
+}
+
+.title {
+    margin-bottom: 4rem;
+}
+
+.subTitle {
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.misc {
+    gap: 1rem;
+}
+
+.infoPanel > * > p {
+    margin: 0px ;
+    font-family: Inter;
+    font-weight: 500;
+}
+
+.id {
+    font-size: .75rem;
+    font-weight: 800;
+}
+
+.name {
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.price, .year, .hours, .ratings {
+    font-size: 1.5rem;
+    border-bottom: 1px dotted darkgray;
+}
+
+.genres, .studio {
+    font-size: 1.75rem;
 }

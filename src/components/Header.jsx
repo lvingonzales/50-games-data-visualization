@@ -14,7 +14,7 @@ export default function Header({mainBtns, controlBtns}) {
           </div>
         </div>
         <div className={style_header.controlPanel}>
-          <p>Now Customize</p>
+          <p>Customize the Distribution</p>
           <div className={style_header.controls}>
             {controlBtns.map(btn => (
               btn

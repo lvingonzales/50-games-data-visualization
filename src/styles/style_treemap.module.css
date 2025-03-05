@@ -2,7 +2,7 @@
     transition: 0.5s all ease-in-out;
 }
 
-.active.selected {
+.active.selected, .selected {
     fill: darkgreen;
     fill-opacity: 1 !important;
 }
@@ -14,7 +14,7 @@
 
 .inactive {
     fill: black;
-    fill-opacity: 60%;
+    fill-opacity: 1;
 }
 
 .svgWrapper, .swarmWrapper {

@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    font-family: Inter;
 }
 
 .header > * {
@@ -31,6 +32,7 @@
 .hero > h2,
 .controlPanel > p {
     margin: 0px;
+    font-size: 1.5rem;
 }
 
 .hero > div {

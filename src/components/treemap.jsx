@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { useEffect, useRef} from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
 
-export default function Treemap({colours, activeChart}) {
+export default function Treemap({colours, activeChart, setActiveData}) {
   const chartRef = useRef(null);
 
   const uid = (prefix = "id") => {
@@ -43,7 +43,7 @@ export default function Treemap({colours, activeChart}) {
       games.forEach((game) => {
         game.Hours = +game.Hours;
         game["Price (current)"] = +game["Price (current)"];
-        game["Ratings(% positive)"] = +game["Ratings (% positive)"].replace(
+        game["Ratings (% positive)"] = +game["Ratings (% positive)"].replace(
           "%",
           ""
         );
@@ -85,7 +85,9 @@ export default function Treemap({colours, activeChart}) {
         .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
         .attr("href", d => `https://steamdb.info/app/${d.data.data.AppId}/`)
         .attr("target", "_blank")
-        .on("mouseover", (event) => {
+        .on("mouseover", (event, datum) => {
+          setActiveData(datum.data.data)
+          console.log(datum.data.data)
           let group = event.currentTarget.classList.value;
           let selected = event.currentTarget.querySelector("rect");
 

@@ -30,6 +30,17 @@ export default function App() {
 
   const [activeChart, setActiveChart] = useState("tree");
   const [activeCriteria, setActiveCriteria] = useState("Release Year");
+  const [activeData, setActiveData] = useState({
+    Game: null,
+    AppId: null,
+    Genre: null,
+    "Sub-genre": null,
+    Hours: null,
+    "Release Year": null,
+    "Price (current)": null,
+    "Ratings (% positive)": null,
+    Studio: null,
+  });
 
   const [heroSection, heroVisible] = useElementOnScreen({
     ...options,
@@ -103,10 +114,44 @@ export default function App() {
         />
 
         <Chart>
-          <Treemap colours={colorMapping} activeChart={activeChart} />
-          <BeeSwarm colours={colorMapping} activeChart={activeChart} activeCriteria={activeCriteria} />
+          <Treemap
+            colours={colorMapping}
+            activeChart={activeChart}
+            setActiveData={setActiveData}
+          />
+          <BeeSwarm
+            colours={colorMapping}
+            activeChart={activeChart}
+            activeCriteria={activeCriteria}
+            setActiveData={setActiveData}
+          />
         </Chart>
-        <div className="infoPanel"></div>
+        <div className="infoPanel">
+          <div className="title">
+            <p className="id">AppId: {activeData.AppId}</p>
+            <p className="name">{activeData.Game}</p>
+          </div>
+          <div className="subTitle">
+            <p className="studio ">Studio: {activeData.Studio}</p>
+            <p className="genres">
+              {" "}
+              Genre(s):{activeData.Genre}, {activeData["Sub-genre"]}
+            </p>
+          </div>
+          <div className="misc">
+            <p className="price">
+              Current Price: ${activeData["Price (current)"]}
+            </p>
+            <p className="year">Release Year: {activeData["Release Year"]}</p>
+            <p className="hours">Played Hours: {activeData.Hours}hrs</p>
+            <p className="ratings">
+              Ratings (x%positive):{" "}
+              {+activeData["Ratings (% positive)"] > 1
+                ? +activeData["Ratings (% positive)"]
+                : +activeData["Ratings (% positive)"] * 100}%
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );

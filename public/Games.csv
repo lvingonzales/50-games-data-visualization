@@ -1,4 +1,4 @@
-Game,Genre,Sub-genre,Release Year,Studio,Hours, Price (current),Ratings (% positive),AppId
+Game,Genre,Sub-genre,Release Year,Studio,Hours,Price (current),Ratings (% positive),AppId
 Root,,,,,,,
 Action,Root,,,,,,
 Apex Legends,Action,None,2020,Respawn Entertainment,533.4,0,0.67,1172470

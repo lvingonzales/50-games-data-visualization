@@ -1,9 +1,12 @@
 import * as d3 from "d3";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
+import { element } from "prop-types";
 
-export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
+export default function BeeSwarm({ colours, activeChart, activeCriteria, setActiveData}) {
   const chartRef = useRef(null);
+
+  const [hovered, setHovered] = useState({element: null, genre: null});
 
   const renderChart = () => {
     const chartDimensions = {
@@ -17,7 +20,7 @@ export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
       bottom: 20,
     };
 
-    const radius = 10;
+    const radius = 15;
     const padding = 2;
 
     d3.select(chartRef.current).html('');
@@ -40,8 +43,9 @@ export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
         .attr("viewBox", [0, 0, chartDimensions.width, chartDimensions.height])
         .attr(
           "style",
-          "max-width: 100%; height: auto; border: 1px solid black;"
-        );
+          "max-width: 100%; height: auto;"
+        )
+        
 
       svg
         .append("g")
@@ -54,7 +58,6 @@ export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
       svg
         .append("g")
         .attr("transform", `translate(0, 125)`)
-        .attr("style", "border: 1px solid black;")
         .selectAll("circle")
         .data(
           dodge(data, {
@@ -63,6 +66,13 @@ export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
           })
         )
         .join("circle")
+        .attr("id", datum => datum.data.Genre)
+        .on("mouseout", () => setHovered({element: null, genre: null}))
+        .on("mouseover", (event, datum) => {
+          // console.log(typeof +datum.data["Ratings (% positive)"])
+          setHovered({element: event.currentTarget, genre: datum.data.Genre})
+          setActiveData(datum.data)
+        })
         .attr("cx", (datum) => datum.x)
         .attr(
           "cy",
@@ -78,6 +88,27 @@ export default function BeeSwarm({ colours, activeChart, activeCriteria }) {
         .text((datum) => datum.data.Game);
     });
   }
+  
+  useEffect (() => {
+    if(hovered.element === null) {
+      Array.from(document.querySelectorAll("circle")).forEach(circle => {
+        circle.classList.remove(style_treeMap.selected);
+        circle.classList.remove(style_treeMap.active);
+        circle.classList.remove(style_treeMap.inactive);
+      })
+    } else {
+      hovered.element.classList.add(style_treeMap.selected)
+      Array.from(document.querySelectorAll("circle")).forEach(circle => {
+        if(circle.id === hovered.genre) {
+          circle.classList.add (style_treeMap.active);
+        } else {
+          circle.classList.add (style_treeMap.inactive)
+        }
+      })
+    }
+
+    
+  }, [hovered])
 
   useEffect(() => {
     if (activeChart === "bee") {
