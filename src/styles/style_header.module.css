@@ -1,0 +1,50 @@
+.header {
+    grid-area: 1 / 1 / 2 / 3;
+    transform: translateY(-100%);
+    opacity: 0%;
+    transition: transform .75s ease-in-out, opacity 0.7s ease-in-out 0.25s;
+    pointer-events: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    font-family: Inter;
+}
+
+.header > * {
+    margin: 16px 0px 0px 16px;
+}
+
+:global(.mainContainer.isVisible) > .header {
+    pointer-events: all;
+    border-bottom: 1px solid lightgray;
+    box-shadow: 0 0 1rem darkgray;
+    transform: translateY(0%);
+    opacity: 100%;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hero > h2,
+.controlPanel > p {
+    margin: 0px;
+    font-size: 1.5rem;
+}
+
+.hero > div {
+    display: flex;
+    gap: 16px;
+}
+
+.controlPanel {
+    margin-top: 0px;
+}
+
+.controls {
+    display: flex;
+    gap: 16px;
+}

@@ -1,30 +1,34 @@
 import * as d3 from "d3";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import style_treeMap from "../styles/style_treemap.module.css";
 
-export default function Treemap() {
+export default function Treemap({colours, activeChart, setActiveData}) {
   const chartRef = useRef(null);
 
   const uid = (prefix = "id") => {
     return `${prefix}-${crypto.randomUUID()}`;
   };
 
-  const colorMapping = {
-    Action: "#9E0031", //Red
-    Adventure: "#386C0B", //Green
-    Strategy: "#183059", //Blue
-    Casual: "#F40076", // Pink
-    "Role-Playing": "#571F4E", //Deep Purple
-    "Colony Builder": "#2A2D34", // Dark Grey , Slate
-    Fighting: "#7B0828", //Claret
-    Sandbox: "#41292C", //Van Dyke
-    Survival: "#3A015C", //Violet
-    "Tower-Defense": "#362417", //Bistre
-  };
+  useEffect (() => {
+    if (activeChart === "tree") {
+      chartRef.current.classList.add(style_treeMap.activeChart);
+    } else {
+      chartRef.current.classList.remove(style_treeMap.activeChart);
+    }
+  }, [activeChart])
+
+  const resetChart = () => {
+    Array.from(document.querySelectorAll('rect')).forEach(rect => {
+      rect.classList.remove(style_treeMap.inactive);
+      rect.classList.remove(style_treeMap.active);
+      rect.classList.remove(style_treeMap.selected);
+    });
+  }
 
   useEffect(() => {
     const width = 1000;
-    const height = 800;
+    const height = 600;
+    
 
     const margin = {
       top: 10,
@@ -34,12 +38,12 @@ export default function Treemap() {
     };
 
     d3.csv("/Games.csv").then((games) => {
-      console.log("Raw Data:", games);
+      //console.log("Raw Data:", games);
 
       games.forEach((game) => {
         game.Hours = +game.Hours;
         game["Price (current)"] = +game["Price (current)"];
-        game["Ratings(% positive)"] = +game["Ratings (% positive)"].replace(
+        game["Ratings (% positive)"] = +game["Ratings (% positive)"].replace(
           "%",
           ""
         );
@@ -57,15 +61,18 @@ export default function Treemap() {
           .sort((a, b) => b.value - a.value)
       );
 
-      console.log("Hierarchy:", root);
+      //console.log("Hierarchy:", root);
 
       const svg = d3
         .select(chartRef.current)
         .append("svg")
-        .attr("viewBox", [0, 0, width + margin.right + margin.left, height])
+        .attr("viewBox", [0, 0, width, height])
         .attr("width", width)
         .attr("height", height)
-        .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
+        .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;")
+        .on("mouseleave", () => {
+          resetChart();
+        })
 
       const leafContainer = svg.append("g");
 
@@ -73,21 +80,50 @@ export default function Treemap() {
         .selectAll("g")
         .data(root.leaves())
         .join("a")
+        .attr("id", "treeLeaf")
+        .attr("class", (d) => d.parent.data.id)
         .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
-        .attr("href", "#")
+        .attr("href", d => `https://steamdb.info/app/${d.data.data.AppId}/`)
+        .attr("target", "_blank")
+        .on("mouseover", (event, datum) => {
+          setActiveData(datum.data.data)
+          console.log(datum.data.data)
+          let group = event.currentTarget.classList.value;
+          let selected = event.currentTarget.querySelector("rect");
+
+          let leaves = Array.from(document.querySelectorAll("#treeLeaf"));
+
+          leaves.forEach((leaf) => {
+            let leafRect = leaf.querySelector("rect");
+            if (
+              leaf !== selected &&
+              leafRect.classList.contains(style_treeMap.selected)
+            ) {
+              leafRect.classList.remove(style_treeMap.selected);
+            }
+            if (leaf.classList.contains(group)) {
+              leafRect.classList.remove(style_treeMap.inactive);
+              leafRect.classList.add(style_treeMap.active);
+              selected.classList.add(style_treeMap.selected);
+            } else {
+              leafRect.classList.add(style_treeMap.inactive);
+            }
+          });
+        })
 
       leaf
         .append("rect")
+        .attr("class", style_treeMap.rects)
         .attr("id", (d) => (d.leafUid = uid("leaf")))
         .attr("width", (d) => d.x1 - d.x0)
         .attr("height", (d) => d.y1 - d.y0)
         .attr("fill", (d) => {
           let parent = d.parent;
-          while (parent && !colorMapping[parent.data.id]) {
+          while (parent && !colours[parent.data.id]) {
             parent = parent.parent;
           }
 
-          return colorMapping[parent ? parent.data.id : "default"];
+          return colours[parent ? parent.data.id : "default"];
         });
 
       leaf
@@ -103,7 +139,9 @@ export default function Treemap() {
         .attr("font-size", "16px")
         .selectAll("tspan")
         .data((d) =>
-          d.data.id.split(/(?=[A-Z][a-z])|\s+/g).concat(d3.format(".1f")(d.value))
+          d.data.id
+            .split(/(?=[A-Z][a-z])|\s+/g)
+            .concat(d3.format(".1f")(d.value))
         )
         .join("tspan") // Create/update/remove <tspan> elements based on data
         .attr("x", 3) // Set horizontal position
@@ -124,35 +162,10 @@ export default function Treemap() {
           ) => (i === nodes.length - 1 ? 0.7 : null)
         )
         .text((d) => d); // Set text content
-
-      const legendWrapper = svg
-        .append("g")
-        .attr("transform-origin", "50 50")
-        .attr("transform", `translate(${width}, ${margin.top})`)
-        .attr("class", style_treeMap.legendWrapper);
-
-      const legend = legendWrapper
-        .selectAll(".legend")
-        .data(Object.entries(colorMapping))
-        .enter()
-        .append("g")
-        .attr("class", style_treeMap.legend)
-        .attr("transform", (d, i) => `translate(0, ${i * 50})`);
-
-      legend
-        .append("rect")
-        .attr("width", 18)
-        .attr("height", 18)
-        .attr("fill", (d) => d[1]);
-
-      legend
-        .append("text")
-        .attr("class", style_treeMap.legendText)
-        .attr("x", 20)
-        .attr("y", 14)
-        .text((d) => d[0]);
     });
-  });
+  }, []);
 
-  return <div ref={chartRef}></div>;
+  return (
+      <div className={style_treeMap.svgWrapper} ref={chartRef}></div>
+  );
 }

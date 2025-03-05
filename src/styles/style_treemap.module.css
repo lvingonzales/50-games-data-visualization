@@ -1,3 +1,43 @@
-.legendText {
-    font-size: 1rem;
+.rects {
+    transition: 0.5s all ease-in-out;
+}
+
+.active.selected, .selected {
+    fill: darkgreen;
+    fill-opacity: 1 !important;
+}
+
+.active {
+    fill: green;
+    fill-opacity: 0.6;
+}
+
+.inactive {
+    fill: black;
+    fill-opacity: 1;
+}
+
+.svgWrapper, .swarmWrapper {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s all ease-in-out;
+}
+
+.svgWrapper.activeChart, .swarmWrapper.activeChart {
+    position: absolute;
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s all ease-in-out;
+}
+
+@keyframes FlyIn {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        
+    }
 }

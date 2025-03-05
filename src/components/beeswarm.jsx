@@ -1,105 +1,167 @@
 import * as d3 from "d3";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import style_treeMap from "../styles/style_treemap.module.css";
+import { element } from "prop-types";
 
-export default function BeeSwarm() {
+export default function BeeSwarm({ colours, activeChart, activeCriteria, setActiveData}) {
   const chartRef = useRef(null);
 
-  useEffect(() => {
-    const width = 928;
-    const height = 160;
-    const marginRight = 20;
-    const marginLeft = 20;
-    const marginBottom = 20;
+  const [hovered, setHovered] = useState({element: null, genre: null});
 
-    // Dot size and padding.
-    const radius = 3;
-    const padding = 1.5;
+  const renderChart = () => {
+    const chartDimensions = {
+      width: 1000,
+      height: 300,
+    };
 
-    // Declare the horizontal (x) encoding.
-    d3.csv("/Games.csv").then(function (data) {
+    const margins = {
+      right: 20,
+      left: 20,
+      bottom: 20,
+    };
+
+    const radius = 15;
+    const padding = 2;
+
+    d3.select(chartRef.current).html('');
+
+    d3.csv("/Games.nonHier.csv").then((data) => {
+      console.log("Raw Data: ", data);
       const x = d3
         .scaleLinear()
-        .domain(d3.extent((data.map((d) => +d["Release Year"]))))
-        .range([marginLeft, width - marginRight]);
+        .domain(d3.extent(data, (datum) => {
+          console.log(datum[toString(activeCriteria)]);
+          return datum[activeCriteria]
+        }))
+        .range([margins.left, chartDimensions.width - margins.right]);
 
       const svg = d3
         .select(chartRef.current)
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", [0, 0, width, height])
-        .attr("style", "max-width: 100%; height: auto;");
+        .attr("width", chartDimensions.width)
+        .attr("height", chartDimensions.height)
+        .attr("viewBox", [0, 0, chartDimensions.width, chartDimensions.height])
+        .attr(
+          "style",
+          "max-width: 100%; height: auto;"
+        )
+        
 
-      // Add the x axis.
       svg
         .append("g")
-        .attr("transform", `translate(0,${height - marginBottom})`)
-        .call(d3.axisBottom(x).tickSizeOuter(0));
+        .attr(
+          "transform",
+          `translate(0, ${chartDimensions.height - margins.bottom})`
+        )
+        .call(d3.axisBottom(x).tickSizeOuter(0).tickFormat(d3.format("d")));
 
-      // Add a dot for each data point, positioned with the dodge function.
       svg
         .append("g")
+        .attr("transform", `translate(0, 125)`)
         .selectAll("circle")
         .data(
           dodge(data, {
             radius: radius * 2 + padding,
-            x: (d) => x(d["weight (lb)"]),
+            x: (datum) => x(datum[activeCriteria]),
           })
         )
         .join("circle")
-        .attr("cx", (d) => d.x)
-        .attr("cy", (d) => height / 2 - radius - padding - d.y)
+        .attr("id", datum => datum.data.Genre)
+        .on("mouseout", () => setHovered({element: null, genre: null}))
+        .on("mouseover", (event, datum) => {
+          // console.log(typeof +datum.data["Ratings (% positive)"])
+          setHovered({element: event.currentTarget, genre: datum.data.Genre})
+          setActiveData(datum.data)
+        })
+        .attr("cx", (datum) => datum.x)
+        .attr(
+          "cy",
+          (datum) => chartDimensions.height / 2 - radius - padding - datum.y
+        )
         .attr("r", radius)
+        .attr("fill", (datum) => {
+          let genre = datum.data.Genre;
+
+          return colours[genre ? genre : "default"];
+        })
         .append("title")
-        .text((d) => d.data.name);
+        .text((datum) => datum.data.Game);
     });
-  }, []);
-}
-
-function dodge(data, { radius, x }) {
-  const radius2 = radius ** 2;
-  const circles = data
-    .map((d) => ({ x: x(d), data: d }))
-    .sort((a, b) => a.x - b.x);
-  const epsilon = 1e-3;
-  let head = null,
-    tail = null;
-
-  // Returns true if circle ⟨x,y⟩ intersects with any circle in the queue.
-  function intersects(x, y) {
-    let a = head;
-    while (a) {
-      if (radius2 - epsilon > (a.x - x) ** 2 + (a.y - y) ** 2) {
-        return true;
-      }
-      a = a.next;
-    }
-    return false;
   }
+  
+  useEffect (() => {
+    if(hovered.element === null) {
+      Array.from(document.querySelectorAll("circle")).forEach(circle => {
+        circle.classList.remove(style_treeMap.selected);
+        circle.classList.remove(style_treeMap.active);
+        circle.classList.remove(style_treeMap.inactive);
+      })
+    } else {
+      hovered.element.classList.add(style_treeMap.selected)
+      Array.from(document.querySelectorAll("circle")).forEach(circle => {
+        if(circle.id === hovered.genre) {
+          circle.classList.add (style_treeMap.active);
+        } else {
+          circle.classList.add (style_treeMap.inactive)
+        }
+      })
+    }
 
-  // Place each circle sequentially.
-  for (const b of circles) {
-    // Remove circles from the queue that can’t intersect the new circle b.
-    while (head && head.x < b.x - radius2) head = head.next;
+    
+  }, [hovered])
 
-    // Choose the minimum non-intersecting tangent.
-    if (intersects(b.x, (b.y = 0))) {
+  useEffect(() => {
+    if (activeChart === "bee") {
+      chartRef.current.classList.add(style_treeMap.activeChart);
+    } else {
+      chartRef.current.classList.remove(style_treeMap.activeChart);
+    }
+  }, [activeChart]);
+
+  const dodge = (data, { radius, x }) => {
+    const radius2 = radius ** 2;
+    const circles = data
+      .map((datum) => ({ x: x(datum), data: datum }))
+      .sort((a, b) => a.x - b.x);
+    const epsilon = 1e-3;
+    let head = null,
+      tail = null;
+
+    // True if circle intersects
+    const intersects = (x, y) => {
       let a = head;
-      b.y = Infinity;
-      do {
-        let y1 = a.y + Math.sqrt(radius2 - (a.x - b.x) ** 2);
-        let y2 = a.y - Math.sqrt(radius2 - (a.x - b.x) ** 2);
-        if (Math.abs(y1) < Math.abs(b.y) && !intersects(b.x, y1)) b.y = y1;
-        if (Math.abs(y2) < Math.abs(b.y) && !intersects(b.x, y2)) b.y = y2;
-        a = a.next;
-      } while (a);
+      while (a) {
+        if (radius2 - epsilon > (a.x - x) ** 2 + (a.y - y) ** 2) {
+          // need to figure out what this does
+          return true;
+        }
+        a = a.next; // this as well
+      }
+      return false;
+    };
+
+    for (const b of circles) {
+      while (head && head.x < b.x - radius2) head = head.next;
+      if (intersects(b.x, (b.y = 0))) {
+        let a = head;
+        b.y = Infinity;
+        do {
+          let y = a.y + Math.sqrt(radius2 - (a.x - b.x) ** 2);
+          if (y < b.y && !intersects(b.x, y)) b.y = y;
+          a = a.next;
+        } while (a);
+      }
+
+      b.next = null;
+      if (head === null) head = tail = b;
+      else tail = tail.next = b;
     }
+    return circles;
+  };
 
-    // Add b to the queue.
-    b.next = null;
-    if (head === null) head = tail = b;
-    else tail = tail.next = b;
-  }
+  useEffect(() => {
+    renderChart();
+  }, [activeCriteria]);
 
-  return circles;
+  return <div className={style_treeMap.swarmWrapper} ref={chartRef}></div>;
 }
